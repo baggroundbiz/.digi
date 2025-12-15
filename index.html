@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bagground | Your Full Digital Groundwork Bag</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Icons -->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
@@ -25,7 +23,6 @@
   --border:#e5e7eb;
   --hover:#f3f4f6;
 }
-
 
 * { box-sizing:border-box; }
 
@@ -61,71 +58,6 @@ body {
   padding:20px 0;
 }
 
-/* =====================
-   MOBILE NAV TOGGLE
-   ===================== */
-
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-}
-
-.nav-toggle span {
-  display: block;
-  width: 24px;
-  height: 2px;
-    background: #111;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-
-  margin: 5px 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-/* Mobile styles */
-@media (max-width: 768px) {
-
-  .nav {
-    position: relative;
-  }
-
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding: 14px 0;
-    border-bottom: 1px solid #eee;
-
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-8px);
-    transition: all 0.25s ease;
-  }
-
-  .nav-links a {
-    padding: 14px 22px;
-    font-size: 16px;
-  }
-
-  .nav-toggle {
-    display: block;
-  }
-
-  /* Open state */
-  .nav.open .nav-links {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-}
-
 /* Keep brand left, toggle right */
 .nav {
   display: flex;
@@ -137,16 +69,32 @@ body {
   margin-left: auto;
 }
 
-@media (max-width: 768px) {
-  .nav-links {
-    display: flex;
-    position: absolute;
-  }
+/* =====================
+   MOBILE NAV TOGGLE
+   ===================== */
 
-  /* Hide inline links from header row */
-  .nav > .nav-links {
-    pointer-events: none;
-  }
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  position: relative;
+  z-index: 1001;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  margin: 5px 0;
+  background: #111;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+}
+
+/* Hamburger when menu is open */
+.nav.open .nav-toggle span {
+  background: #ffffff;
 }
 
 /* Animate hamburger into X */
@@ -162,25 +110,37 @@ body {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* Desktop: hide hamburger */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none;
+  }
+}
 
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+}
+
+/* =====================
+   BRAND & LOGO
+   ===================== */
 
 .brand {
   display:flex;
   align-items:center;
   gap:6px;
+  animation: logoEnter 0.8s ease-out both;
 }
 
 .logo-svg {
   width:180px;
   transform:scaleX(1.05);
+  transition: transform 0.35s ease;
 }
-
 
 /* Logo entrance animation */
-.brand {
-  animation: logoEnter 0.8s ease-out both;
-}
-
 @keyframes logoEnter {
   from {
     opacity: 0;
@@ -206,17 +166,11 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-  .hero-premium {
-    overflow: visible;
-  }
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
 }
-
-
-.logo-svg {
-  transition: transform 0.35s ease;
-}
-
 
 .brand-text {
   font-size:16px;
@@ -228,12 +182,6 @@ body {
 /* =====================
    BRAND TAGLINE
    ===================== */
-
-.brand-copy {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
-}
 
 .brand-tagline {
   font-size: 11px;
@@ -255,13 +203,12 @@ body {
   bottom: -2px;
   width: 0%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #b11226, transparent);  background: linear-gradient(
+  background: linear-gradient(
     90deg,
     transparent,
     rgba(0,0,0,0.4),
     transparent
   );
-
   animation: underlineGrow 1.2s ease-out 1s forwards;
 }
 
@@ -278,6 +225,7 @@ body {
     width: 100%;
   }
 }
+
 @media (max-width: 768px) {
   .brand-tagline {
     font-size: 10px;
@@ -285,13 +233,16 @@ body {
   }
 }
 
+/* =====================
+   NAV LINKS (DESKTOP)
+   ===================== */
 
 nav a {
   margin-left:24px;
   text-decoration:none;
   color:#111;
   font-weight:500;
-  nav a {
+  position: relative;
   transition: color 0.25s ease;
 }
 
@@ -299,6 +250,225 @@ nav a:hover {
   color:#6b7280;
 }
 
+/* Underline animation */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: #111;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-links a span {
+  position: relative;
+  z-index: 2;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+/* Hover effect */
+@media (hover: hover) {
+  .nav-links a:hover span {
+    transform: translateY(-1px);
+  }
+
+  .nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* CTA Button in Nav */
+.nav-links .nav-cta {
+  margin-left: 32px;
+}
+
+.nav-links .nav-cta span {
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.nav-links .nav-cta::after {
+  display: none;
+}
+
+@media (hover: hover) {
+  .nav-links .nav-cta:hover span {
+    background: #1f2937;
+    transform: translateY(-1px);
+  }
+}
+
+/* =====================
+   NAV LINKS (MOBILE OVERRIDE)
+   ===================== */
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+
+    /* === HERO-LIKE BACKGROUND === */
+    background:
+      linear-gradient(
+        rgba(0,0,0,0.88),
+        rgba(0,0,0,0.88)
+      ),
+      url("https://i.ibb.co/jZJQ9Q8s/24398-i-Stock-1178579178-min-scaled-1f3e5fc2cf.jpg");
+    background-size: cover;
+    background-position: center;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 96px 24px 24px;
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-100%); /* Start off-screen */
+    transition: opacity 0.35s ease, transform 0.45s ease;
+  }
+
+  /* Open state */
+  .nav.open .nav-links {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav-links a {
+    color: #ffffff;
+    font-size: 20px;
+    padding: 14px 0;
+    margin-left: 0; /* Remove desktop margin */
+    transition: transform 0.35s ease; /* Individual link delay animation */
+  }
+  
+  /* Link entrance animation delays */
+  .nav.open .nav-links a:nth-child(2) { transition-delay: 0.05s; }
+  .nav.open .nav-links a:nth-child(3) { transition-delay: 0.1s; }
+  .nav.open .nav-links a:nth-child(4) { transition-delay: 0.15s; }
+  .nav.open .nav-links a:nth-child(5) { transition-delay: 0.2s; }
+  
+  .nav-links a {
+    transform: translateY(6px);
+  }
+
+  .nav.open .nav-links a {
+    transform: translateY(0);
+  }
+
+  /* Hide CTA in main links list on mobile */
+  .nav-links .nav-cta {
+    display: none;
+  }
+
+  /* Remove mobile logo from main flow */
+  .mobile-brand {
+    margin-bottom: 20px;
+  }
+
+  .mobile-brand svg {
+    width: 160px;
+  }
+}
+
+/* Mobile Brand Transition */
+@media (max-width: 768px) {
+  .mobile-brand {
+    transform: translateY(-12px);
+    transition: transform 0.45s ease, opacity 0.45s ease;
+    opacity: 0;
+  }
+
+  .nav.open .mobile-brand {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Actions */
+.mobile-nav-actions {
+  display: none; /* Hide by default for desktop */
+}
+
+@media (max-width: 768px) {
+  .mobile-nav-actions {
+    display: block;
+    margin-top: auto;
+    padding-top: 48px;
+    padding-bottom: 40px;
+    border-top: 1px solid rgba(255,255,255,0.18);
+  }
+
+  .nav-links .mobile-contact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 220px;
+    padding: 16px 36px;
+    margin: 0 auto 34px auto;
+
+    background: #ffffff;
+    color: #111111 !important;
+    text-decoration: none;
+
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+
+    box-shadow:
+      0 12px 32px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+
+  .nav-links .mobile-contact:visited,
+  .nav-links .mobile-contact:active,
+  .nav-links .mobile-contact:focus {
+    color: #111111 !important;
+  }
+
+  .mobile-socials {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 12px;
+  }
+
+  .mobile-socials a {
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+
+    color: #ffffff;
+    backdrop-filter: blur(6px);
+
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+
+  .mobile-socials a:active {
+    transform: scale(0.95);
+  }
 }
 
 /* =====================
@@ -320,7 +490,6 @@ nav a:hover {
   transform: translateY(-1px);
 }
 
-
 .btn-ghost {
   background:#111111;
   padding:16px 30px;
@@ -332,11 +501,22 @@ nav a:hover {
 }
 
 .btn-ghost:hover {
-  background: #25D366;
+  background: #25D366; /* WhatsApp Green */
   border-color: rgba(255,255,255,0.6);
 }
 
+.btn-outline {
+  padding: 16px 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.25);
+  color: #fff;
+  text-decoration: none;
+  transition: border-color 0.3s ease;
+}
 
+.btn-outline:hover {
+  border-color: rgba(255,255,255,.45);
+}
 
 
 /* =====================
@@ -349,32 +529,25 @@ nav a:hover {
   background: #000;
 }
 
-/* Clip ONLY the background */
-.hero-bg-carousel {
-  overflow: hidden;
-}
-
-
-.hero-bg-carousel,
-.hero-bg-track,
-.bg-slide {
-  height:100%;
-}
-
+/* Background Carousel */
 .hero-bg-carousel {
   position:absolute;
   inset:0;
   z-index:0;
+  height:100%;
+  overflow: hidden; /* Clip ONLY the background */
 }
 
 .hero-bg-track {
   display:flex;
   width:300%;
+  height:100%;
   animation:heroBgSlide 30s linear infinite;
 }
 
 .bg-slide {
   flex:0 0 100%;
+  height:100%;
   background-size:cover;
   background-position:center;
   filter:brightness(0.4) saturate(0.8);
@@ -404,8 +577,8 @@ nav a:hover {
   padding: 70px 72px;
   border-radius: 22px;
 
-  background: rgba(255, 255, 255, 0.88); /* 👈 lighter */
-  backdrop-filter: blur(14px);          /* 👈 softer blur */
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 
   border: 1px solid rgba(255, 255, 255, 0.75);
@@ -414,8 +587,6 @@ nav a:hover {
     0 20px 50px rgba(0,0,0,0.12),
     inset 0 1px 0 rgba(255,255,255,0.9);
 }
-
-
 
 .hero-eyebrow {
   color: #64748b;
@@ -431,11 +602,18 @@ nav a:hover {
   color: #475569;
 }
 
-
 .hero-actions {
   margin-top:44px;
   display:flex;
   gap:18px;
+}
+
+/* Animation */
+@keyframes heroBgSlide {
+  0% { transform:translateX(0); }
+  33% { transform:translateX(-33.33%); }
+  66% { transform:translateX(-66.66%); }
+  100% { transform:translateX(0); }
 }
 
 /* =====================
@@ -459,15 +637,9 @@ nav a:hover {
 }
 
 .service-line {
-  background:white;
+  background: var(--light);
   border-radius:18px;
   padding:36px 34px;
-  border:1px solid #e5e7eb;
-  transition:transform .35s ease, box-shadow .35s ease;
-}
-
-.service-line {
-  background:#ffffff;
   border:1px solid var(--border);
   transition:
     transform 0.3s ease,
@@ -481,17 +653,86 @@ nav a:hover {
   box-shadow: 0 12px 28px rgba(0,0,0,0.08);
 }
 
+.service-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  transition: all 0.35s ease;
+}
+
+.service-icon i {
+  font-size: 22px;
+  color: #111;
+  transition: transform 0.35s ease, color 0.35s ease;
+}
+
+.service-line:hover .service-icon {
+  background: #111;
+  border-color: #111;
+}
+
+.service-line:hover .service-icon i {
+  color: #fff;
+  transform: rotate(-6deg) scale(1.1);
+}
 
 /* =====================
-   CTA & FOOTER
+   CTA
    ===================== */
 
-.cta {
-  background:#111;
-  color:white;
-  padding:80px 0;
-  text-align:center;
+.cta-premium {
+  padding: 120px 0;
+  background: #0b0b0b;
 }
+
+.cta-card {
+  max-width: 860px;
+  margin: auto;
+  padding: 64px 64px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #111, #0b0b0b);
+  border: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+}
+
+.cta-eyebrow {
+  font-size: 12px;
+  letter-spacing: .18em;
+  color: #9ca3af;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.cta-card h2 {
+  font-size: 42px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.cta-card p {
+  color: #d1d5db;
+  font-size: 18px;
+  max-width: 620px;
+  margin: 0 auto 36px;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+/* =====================
+   FOOTER
+   ===================== */
 
 .footer {
   border-top: 1px solid #e5e7eb;
@@ -543,35 +784,15 @@ nav a:hover {
 .footer-copy {
   white-space: nowrap;
 }
-@media (max-width: 768px) {
-
-  .footer-inner {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .footer-copy {
-    text-align: center;
-  }
-}
-
-
-@media (max-width: 768px) {
-  .footer-socials {
-    gap: 18px;
-  }
-
-  .footer-socials a {
-    font-size: 18px;
-  }
-}
 
 
 /* =========================
    MOBILE TUNING ONLY
    ========================= */
-@media (max-width:768px) {
 
+@media (max-width: 768px) {
+
+  /* General */
   body {
     font-size:15px;
   }
@@ -584,6 +805,7 @@ nav a:hover {
     padding:14px 0;
   }
 
+  /* Logo */
   .logo-svg {
     width:150px;
   }
@@ -592,16 +814,17 @@ nav a:hover {
     font-size:14px;
   }
 
+  /* Nav Links (Desktop style) */
   nav a {
     margin-left:14px;
     font-size:14px;
   }
 
   /* HERO */
-.hero-premium {
-  min-height: 100vh;
-}
-
+  .hero-premium {
+    min-height: 100vh;
+    padding: 100px 0 120px;
+  }
 
   .hero-card {
     padding:42px 34px;
@@ -616,16 +839,16 @@ nav a:hover {
     font-size:17px;
   }
 
+  .hero-actions {
+    flex-direction: column;
+    gap: 14px;
+  }
+
   .hero-bg-track {
     animation-duration:45s;
   }
 
   /* SERVICES */
-  
-  .services-grid {
-  grid-template-columns: 1fr;
-}
-
   .services-premium {
     padding:100px 0;
   }
@@ -638,6 +861,7 @@ nav a:hover {
 
   .services-grid {
     margin-top:40px;
+    grid-template-columns: 1fr;
     gap:26px;
   }
 
@@ -656,23 +880,34 @@ nav a:hover {
   }
 
   /* CTA */
-  .cta {
-    padding:90px 24px;
+  .cta-card {
+    padding: 48px 28px;
   }
 
-  .cta h2 {
-    font-size:32px;
+  .cta-card h2 {
+    font-size: 32px;
   }
+
+  .cta-actions {
+    flex-direction: column;
+  }
+
+  /* Footer */
+  .footer-inner {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer-copy {
+    text-align: center;
+  }
+
+  .footer-socials {
+    gap: 18px;
+  }
+
 }
 
-
-/* Animation */
-@keyframes heroBgSlide {
-  0% { transform:translateX(0); }
-  33% { transform:translateX(-33.33%); }
-  66% { transform:translateX(-66.66%); }
-  100% { transform:translateX(0); }
-}
 
 </style>
 </head>
@@ -683,24 +918,44 @@ nav a:hover {
   <div class="container nav">
 
     <div class="brand">
-  <svg class="logo-svg" viewBox="0 0 500 200">
-    <image href="https://i.ibb.co/d0ck3j2V/BG-1-removebg-preview.png" width="500" height="200"/>
-  </svg>
+      <svg class="logo-svg" viewBox="0 0 500 200">
+        <image href="https://i.ibb.co/d0ck3j2V/BG-1-removebg-preview.png" width="500" height="200"/>
+      </svg>
 
-  <div class="brand-copy">
-    <span class="brand-text">Bagground</span>
-    <span class="brand-tagline">Your Full Digital Groundwork Bag</span>
-  </div>
-</div>
+      <div class="brand-copy">
+        <span class="brand-text">Bagground</span>
+        <span class="brand-tagline">Your Full Digital Groundwork Bag</span>
+      </div>
+    </div>
 
 
     <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Services</a>
-      <a href="#">Work</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
+      <div class="mobile-brand">
+        <svg viewBox="0 0 500 200">
+          <image href="https://i.ibb.co/d0ck3j2V/BG-1-removebg-preview.png" width="500" height="200"/>
+        </svg>
+      </div>
+
+      <a href="#"><span>Home</span></a>
+      <a href="#"><span>Services</span></a>
+      <a href="#"><span>Work</span></a>
+      <a href="#"><span>About</span></a>
+      <a href="#" class="nav-cta"><span>Contact</span></a>
+
+      <div class="mobile-nav-actions">
+        <a href="#" class="mobile-contact">Contact</a>
+
+        <div class="mobile-socials-wrap">
+          <div class="mobile-socials">
+            <a href="https://instagram.com/yourhandle"><i class="ri-instagram-line"></i></a>
+            <a href="https://linkedin.com/company/yourcompany"><i class="ri-linkedin-line"></i></a>
+            <a href="https://wa.me/91XXXXXXXXXX"><i class="ri-whatsapp-line"></i></a>
+            <a href="mailto:hello@bagground.in"><i class="ri-mail-line"></i></a>
+          </div>
+        </div>
+      </div>
     </nav>
+
 
     <button class="nav-toggle" aria-label="Open menu">
       <span></span>
@@ -740,21 +995,61 @@ nav a:hover {
   <div class="container">
     <h2>What We Handle — So You Can Focus on Growth</h2>
     <div class="services-grid">
-      <div class="service-line"><h3>Websites That Convert</h3><p>Conversion-focused digital experiences.</p></div>
-      <div class="service-line"><h3>Instagram Presence</h3><p>Authority-driven content systems.</p></div>
-      <div class="service-line"><h3>SEO & Visibility</h3><p>Search strategies that compound.</p></div>
-      <div class="service-line"><h3>Lead Generation</h3><p>Funnels that deliver qualified leads.</p></div>
+      <div class="service-line">
+        <div class="service-icon">
+          <i class="ri-layout-4-line"></i>
+        </div>
+        <h3>Websites That Convert</h3>
+        <p>Conversion-focused digital experiences.</p>
+      </div>
+
+      <div class="service-line">
+        <div class="service-icon">
+          <i class="ri-instagram-line"></i>
+        </div>
+        <h3>Instagram Presence</h3>
+        <p>Authority-driven content systems.</p>
+      </div>
+
+      <div class="service-line">
+        <div class="service-icon">
+          <i class="ri-search-eye-line"></i>
+        </div>
+        <h3>SEO & Visibility</h3>
+        <p>Search strategies that compound</p>
+      </div>
+
+      <div class="service-line">
+        <div class="service-icon">
+          <i class="ri-user-add-line"></i>
+        </div>
+        <h3>Lead Generation</h3>
+        <p>Funnels that deliver qualified leads</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="cta">
+<section class="cta-premium">
   <div class="container">
-    <h2>Let’s Build Your Digital Groundwork</h2>
-    <p>Tell us about your business.</p>
-    <a href="#" class="btn-primary">Contact Bagground</a>
+    <div class="cta-card">
+      <span class="cta-eyebrow">READY TO SCALE?</span>
+
+      <h2>Let’s Build Your Digital Groundwork</h2>
+
+      <p>
+        We help ambitious brands design digital systems that attract,
+        convert, and compound over time.
+      </p>
+
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">Request a Free Growth Audit</a>
+        <a href="#" class="btn-outline">WhatsApp a Strategist</a>
+      </div>
+    </div>
   </div>
 </section>
+
 
 <footer class="footer">
   <div class="container footer-inner">
@@ -782,7 +1077,6 @@ nav a:hover {
 </footer>
 
 
-
 <script>
   const nav = document.querySelector('.nav');
   const toggle = document.querySelector('.nav-toggle');
@@ -791,12 +1085,16 @@ nav a:hover {
     nav.classList.toggle('open');
   });
   
+  // Close menu when a link is clicked
   document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+    });
   });
-});
 
+  // Always load page at top
+  window.history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
 </script>
 
 

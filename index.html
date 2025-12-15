@@ -12,6 +12,12 @@
 
 <style>
 
+body.lock-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+
 /* =====================
    VARIABLES & RESET
    ===================== */
@@ -122,6 +128,17 @@ body {
     display: block;
   }
 }
+
+/* =====================
+   FORCE WHITE CLOSE ICON ON MOBILE
+   ===================== */
+
+@media (max-width: 768px) {
+  .nav.open .nav-toggle span {
+    background: #ffffff !important;
+  }
+}
+
 
 /* =====================
    BRAND & LOGO
@@ -376,39 +393,46 @@ nav a:hover {
     display: none;
   }
 
-  /* Remove mobile logo from main flow */
-  .mobile-brand {
-    margin-bottom: 20px;
-  }
+/* Remove mobile logo from main flow */
+  .mobile-brand {
+    margin-bottom: 20px;
+    /* 🎯 MODIFICATION FOR ALIGNMENT */
+    margin-left: -90px; /* <-- PULLS LEFT TO CANCEL PADDING */
+    padding-left: 0px; /* <-- Re-adds padding inside the logo container */
+    align-self: flex-start;
+  }
 
   .mobile-brand svg {
     width: 160px;
   }
   
   /* Force solid logo in mobile menu */
-.mobile-brand svg {
-  opacity: 1;
-  filter: none;
+/* 🎯 FINAL FIX: Invert dark logo to light when menu is open */
+.nav.open .mobile-brand svg image {
+  opacity: 1 !important;
+  filter: invert(1) brightness(2) contrast(1.5) !important;
+}
+  
 }
 
-.mobile-brand image {
-  opacity: 1;
-}
-  
-}
 
-/* Mobile Brand Transition */
+
+/* 🎯 FINAL FIX: Ensure logo is bright when menu is open */
 @media (max-width: 768px) {
-  .mobile-brand {
-    transform: translateY(-12px);
-    transition: transform 0.45s ease, opacity 0.45s ease;
-    opacity: 0;
-  }
+    /* We target the image tag inside the svg inside the open mobile brand */
+    .nav.open .mobile-brand svg image {
+        /* Invert dark colors to light, and boost brightness/contrast for a crisp white look */
+        filter: invert(1) brightness(2) contrast(1.5); 
+        transition: filter 0.45s ease;
+    }
+}
 
-  .nav.open .mobile-brand {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+  /* Hide mobile menu logo on desktop */
+@media (min-width: 769px) {
+  .mobile-brand {
+    display: none;
+  }
 }
 
   /* Hide mobile menu logo on desktop */
@@ -897,6 +921,207 @@ nav a:hover {
     line-height:1.6;
   }
 
+.why-us {
+  padding: 120px 0;
+  background: #fafafa;
+}
+
+/* Why card icons */
+
+.why-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+
+  background: rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 22px;
+
+  transition: 
+    transform .4s ease,
+    background .4s ease;
+}
+
+.why-icon i {
+  font-size: 22px;
+  color: #111;
+  transition: transform .4s ease;
+}
+
+.why-card:hover .why-icon {
+  background: #111;
+}
+
+.why-card:hover .why-icon i {
+  color: #fff;
+  transform: rotate(-8deg) scale(1.1);
+}
+
+
+/* =====================
+   PREMIUM WHY CARDS
+   ===================== */
+
+.why-card {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 28px;
+
+  padding: 40px 36px 36px;
+  text-align: left;
+
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  transition: 
+    transform .35s ease,
+    box-shadow .35s ease,
+    background .35s ease;
+}
+
+.why-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.12);
+}
+
+.why-card:active {
+  transform: scale(0.98);
+}
+
+/* Premium close button */
+
+.why-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+
+  background: rgba(0,0,0,0.08);
+  border: none;
+
+  font-size: 22px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background .3s ease, transform .3s ease;
+}
+
+.why-close:hover {
+  background: rgba(0,0,0,0.15);
+  transform: rotate(90deg);
+}
+/* Modal stagger animation */
+
+.why-modal h3 {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: modalTitle .5s ease forwards;
+}
+
+.why-modal p {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: modalText .5s ease forwards;
+  animation-delay: .15s;
+}
+
+@keyframes modalTitle {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =====================
+   WHY CARDS – MOBILE FIRST POLISH
+   ===================== */
+
+@media (max-width: 768px) {
+
+  .why-us {
+    padding: 90px 0;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .why-card {
+    padding: 28px 24px;
+    border-radius: 20px;
+
+    /* Mobile-friendly tap feel */
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  .why-card h4 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .why-card p {
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  .why-cta {
+    font-size: 13px;
+    margin-top: 10px;
+    opacity: 0.75;
+  }
+
+  /* Remove hover-only visuals on touch */
+  .why-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .why-card:active {
+    transform: scale(0.97);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  }
+
+  .why-card::after {
+    opacity: 1; /* subtle depth always visible on mobile */
+  }
+}
+
+
+.why-grid {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.why-grid h4 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
   /* CTA */
   .cta-card {
     padding: 48px 28px;
@@ -928,6 +1153,166 @@ nav a:hover {
 
   
   
+/* === PREMIUM WHY CARD LAYOUT === */
+
+.why-card {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.why-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.why-icon i {
+  font-size: 20px;
+  color: #111;
+}
+
+.why-content h4 {
+  font-size: 18px;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.why-content p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+
+
+.why-modal h3 {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: modalTitleIn .45s ease forwards;
+}
+
+.why-modal p {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: modalTextIn .45s ease forwards;
+  animation-delay: .15s;
+}
+
+@keyframes modalTitleIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalTextIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  
+/* ===== Modal Overlay ===== */
+
+.why-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+
+  animation: overlayFade .35s ease;
+}
+
+.why-modal-overlay.active {
+  display: flex;
+}
+.why-modal {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  max-width: 520px;
+  width: 100%;
+  border-radius: 26px;
+  padding: 40px 38px;
+
+  border: 1px solid rgba(255,255,255,0.55);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+
+  position: relative;
+
+  animation: modalFloatUp .45s cubic-bezier(.22,1,.36,1);
+}
+
+/* ===== Modal Animations ===== */
+
+@keyframes modalFloatUp {
+  from {
+    transform: translateY(24px) scale(.97);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes overlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* =====================
+   FIX WHY CARD TEXT ON MOBILE
+   ===================== */
+
+@media (max-width: 768px) {
+
+  .why-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .why-icon {
+    margin-bottom: 16px;
+  }
+
+  .why-card h4 {
+    max-width: 100%;
+    font-size: 20px;
+    line-height: 1.35;
+  }
+
+  .why-card p {
+    max-width: 100%;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .why-cta {
+    margin-top: 12px;
+  }
+}
+
 
 </style>
 </head>
@@ -939,7 +1324,7 @@ nav a:hover {
 
     <div class="brand">
       <svg class="logo-svg" viewBox="0 0 500 200">
-        <image href="https://i.ibb.co/d0ck3j2V/BG-1-removebg-preview.png" width="500" height="200"/>
+        <image href="https://i.ibb.co/Fk6bwy2M/Untitled-design-9-removebg-preview.png" width="500" height="200"/>
       </svg>
 
       <div class="brand-copy">
@@ -951,10 +1336,9 @@ nav a:hover {
 
     <nav class="nav-links">
       <div class="mobile-brand">
-        <svg viewBox="0 0 500 200">
-          <image href="https://i.ibb.co/d0ck3j2V/BG-1-removebg-preview.png" width="500" height="200"/>
-        </svg>
-      </div>
+        <svg viewBox="140 0 400 200">           <image href="https://i.ibb.co/Fk6bwy2M/Untitled-design-9-removebg-preview.png" width="500" height="200"/>
+        </svg>
+      </div>
 
       <a href="#"><span>Home</span></a>
       <a href="#"><span>Services</span></a>
@@ -998,8 +1382,8 @@ nav a:hover {
 
   <div class="container hero-center">
     <div class="hero-card">
-      <span class="hero-eyebrow">DIGITAL MARKETING AGENCY</span>
-      <h1>We Build Digital Foundations<br>for Brands That Intend to Grow</h1>
+      <span class="hero-eyebrow">Build you online groundwork</span>
+      <h1>Everything Your Brand Needs to Grow — Built the Right Way</h1>
       <p class="hero-subtext">
         Bagground helps businesses establish strong digital ground through strategy, design and systems.
       </p>
@@ -1020,32 +1404,76 @@ nav a:hover {
           <i class="ri-layout-4-line"></i>
         </div>
         <h3>Websites That Convert</h3>
-        <p>Conversion-focused digital experiences.</p>
+        <p>High-performance websites designed to convert attention into enquiries.</p>
+        <span class="service-proof">Built for speed, clarity & trust</span>
       </div>
 
       <div class="service-line">
         <div class="service-icon">
           <i class="ri-instagram-line"></i>
         </div>
-        <h3>Instagram Presence</h3>
-        <p>Authority-driven content systems.</p>
+        <h3>Instagram That Builds Authority</h3>
+        <p>Content systems that position your brand as the obvious choice.</p>
+        <span class="service-proof">Not just posts — a presence</span>
       </div>
 
       <div class="service-line">
         <div class="service-icon">
           <i class="ri-search-eye-line"></i>
         </div>
-        <h3>SEO & Visibility</h3>
-        <p>Search strategies that compound</p>
+        <h3>SEO That Compounds</h3>
+        <p>Search strategies that generate traffic month after month.</p>
+        <span class="service-proof">Long-term visibility, not hacks</span>
       </div>
 
       <div class="service-line">
         <div class="service-icon">
           <i class="ri-user-add-line"></i>
         </div>
-        <h3>Lead Generation</h3>
-        <p>Funnels that deliver qualified leads</p>
+        <h3>Lead Systems That Work</h3>
+        <p>Funnels designed to attract and qualify serious buyers.</p>
+         <span class="service-proof">Quality leads over volume</span>
       </div>
+    </div>
+  </div>
+  
+  <section class="why-us">
+  <div class="container">
+    <h2>Why Brands Choose Bagground</h2>
+
+    <button class="why-card" data-modal="modal-1">
+  <div class="why-icon">
+    <i class="ri-shape-2-line"></i>
+  </div>
+
+  <h4>No Templates. No Guesswork.</h4>
+  <p>Every solution is custom-built for your business.</p>
+  <span class="why-cta">Learn more →</span>
+</button>
+
+
+<button class="why-card" data-modal="modal-2">
+  <div class="why-icon">
+    <i class="ri-compasses-2-line"></i>
+  </div>
+  <div class="why-content">
+    <h4>Strategy Before Design</h4>
+    <p>Every design decision is backed by business thinking.</p>
+    <span class="why-cta">Learn more →</span>
+  </div>
+</button>
+
+<button class="why-card" data-modal="modal-3">
+  <div class="why-icon">
+    <i class="ri-line-chart-line"></i>
+  </div>
+  <div class="why-content">
+    <h4>Built for Long-Term Growth</h4>
+    <p>Systems that compound results over time.</p>
+    <span class="why-cta">Learn more →</span>
+  </div>
+</button>
+
     </div>
   </div>
 </section>
@@ -1058,8 +1486,7 @@ nav a:hover {
       <h2>Let’s Build Your Digital Groundwork</h2>
 
       <p>
-        We help ambitious brands design digital systems that attract,
-        convert, and compound over time.
+        Get clarity on what will actually move the needle for your business — without pressure or sales talk.
       </p>
 
       <div class="cta-actions">
@@ -1096,27 +1523,99 @@ nav a:hover {
   </div>
 </footer>
 
+<!-- WHY MODAL -->
+<div class="why-modal-overlay" id="whyModal">
+  <div class="why-modal">
+  <button class="why-close">×</button>
+  <div class="why-modal-icon" id="whyModalIcon"></div>
+  <h3 id="whyModalTitle"></h3>
+  <p id="whyModalContent"></p>
+</div>
+
+
 
 <script>
+  /* =====================
+     MOBILE NAV
+     ===================== */
   const nav = document.querySelector('.nav');
   const toggle = document.querySelector('.nav-toggle');
+  const body = document.body;
 
   toggle.addEventListener('click', () => {
     nav.classList.toggle('open');
+
+    if (nav.classList.contains('open')) {
+      body.classList.add('lock-scroll');
+    } else {
+      body.classList.remove('lock-scroll');
+    }
   });
-  
-  // Close menu when a link is clicked
+
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       nav.classList.remove('open');
+      body.classList.remove('lock-scroll');
     });
   });
 
-  // Always load page at top
   window.history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
-</script>
 
+  /* =====================
+     WHY MODAL LOGIC
+     ===================== */
+
+  const modalData = {
+  "modal-1": {
+    icon: "ri-shape-line",
+    title: "No Templates. No Guesswork.",
+    content: "We don’t reuse layouts or strategies. Every website, funnel and content system is built specifically for your business goals, audience and growth stage."
+  },
+  "modal-2": {
+    icon: "ri-compasses-2-line",
+    title: "Strategy Before Design",
+    content: "Before visuals come clarity. We map user intent, positioning and conversion paths so design supports results — not just aesthetics."
+  },
+  "modal-3": {
+    icon: "ri-line-chart-line",
+    title: "Built for Long-Term Growth",
+    content: "Our systems are designed to compound. SEO, content and lead flows that get stronger month after month instead of quick wins that fade."
+  }
+};
+
+
+  const overlay = document.getElementById("whyModal");
+  const titleEl = document.getElementById("whyModalTitle");
+  const contentEl = document.getElementById("whyModalContent");
+  const closeBtn = overlay.querySelector(".why-close");
+
+  document.querySelectorAll(".why-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const key = card.dataset.modal;
+      titleEl.textContent = modalData[key].title;
+      document.getElementById("whyModalIcon").innerHTML =
+  `<i class="${modalData[key].icon}"></i>`;
+
+      contentEl.textContent = modalData[key].content;
+
+      overlay.classList.add("active");
+      body.classList.add("lock-scroll");
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    overlay.classList.remove("active");
+    body.classList.remove("lock-scroll");
+  });
+
+  overlay.addEventListener("click", e => {
+    if (e.target === overlay) {
+      overlay.classList.remove("active");
+      body.classList.remove("lock-scroll");
+    }
+  });
+</script>
 
 </body>
 </html>

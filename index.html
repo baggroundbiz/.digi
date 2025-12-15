@@ -135,7 +135,7 @@ body {
 }
 
 .logo-svg {
-  width:180px;
+  width:220px;
   transform:scaleX(1.05);
   transition: transform 0.35s ease;
 }
@@ -384,6 +384,17 @@ nav a:hover {
   .mobile-brand svg {
     width: 160px;
   }
+  
+  /* Force solid logo in mobile menu */
+.mobile-brand svg {
+  opacity: 1;
+  filter: none;
+}
+
+.mobile-brand image {
+  opacity: 1;
+}
+  
 }
 
 /* Mobile Brand Transition */
@@ -400,6 +411,13 @@ nav a:hover {
   }
 }
 
+  /* Hide mobile menu logo on desktop */
+@media (min-width: 769px) {
+  .mobile-brand {
+    display: none;
+  }
+}
+  
 /* Mobile Actions */
 .mobile-nav-actions {
   display: none; /* Hide by default for desktop */
@@ -908,6 +926,8 @@ nav a:hover {
 
 }
 
+  
+  
 
 </style>
 </head>

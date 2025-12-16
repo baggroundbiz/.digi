@@ -730,7 +730,7 @@ nav a:hover {
 
 .hero-premium {
   position: relative;
-  padding: 96px 0 110px; /* ↓ shorter but premium */
+  padding: 46px 0 60px; /* ↓ shorter but premium */
   background: #000;
 }
 
@@ -845,6 +845,32 @@ nav a:hover {
     font-size: 14px;
   }
 }
+
+/* =====================
+   HERO BUTTONS — MOBILE PILL STYLE
+   ===================== */
+@media (max-width: 764px) {
+  .hero-actions {
+    flex-direction: row;          /* ⬅️ side by side */
+    gap: 10px;
+  }
+
+  .hero-actions a {
+    flex: 1;
+    padding: 10px 14px;           /* ⬅️ smaller */
+    font-size: 12.5px;
+    border-radius: 999px;         /* ⬅️ pill */
+    text-align: center;
+  }
+
+  /* Primary button slightly stronger */
+  .hero-actions .btn-primary {
+    box-shadow:
+      0 6px 18px rgba(0,0,0,.25),
+      inset 0 1px 0 rgba(255,255,255,.25);
+  }
+}
+
 
 /* Animation */
 @keyframes heroBgSlide {
@@ -1147,6 +1173,21 @@ nav a:hover {
   }
 }
 
+/* =====================
+   CTA BUTTONS — MOBILE PILL STYLE
+   ===================== */
+@media (max-width: 764px) {
+  .cta-actions {
+    flex-direction: column;   /* stacked but compact */
+    gap: 12px;
+  }
+
+  .cta-actions a {
+    padding: 11px 16px;
+    font-size: 12.5px;
+    border-radius: 999px;     /* ⬅️ pill */
+  }
+}
 
 
 
@@ -1315,8 +1356,8 @@ nav a:hover {
   .hero-bg-track {
     animation-duration:45s;
   }
-
-  /* SERVICES */
+  
+    /* SERVICES */
   .services-premium {
     padding:100px 0;
   }
@@ -1498,6 +1539,40 @@ nav a:hover {
   .cta-actions {
     flex-direction: column;
   }
+  
+  /* =====================
+   LOGO TEXT ONLOAD ANIMATION
+   ===================== */
+
+.brand-text,
+.brand-tagline {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+body.loaded .brand-text {
+  animation: brandTextIn .6s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+body.loaded .brand-tagline {
+  animation: brandTaglineIn .6s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay: .15s;
+}
+
+@keyframes brandTextIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes brandTaglineIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 /* Footer layout control */
 
@@ -2507,6 +2582,14 @@ h3, h4 {
     body.classList.remove("lock-scroll");
   }
 });
+
+/* =====================
+   ONLOAD BRAND ANIMATION
+   ===================== */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+
 
 </script>
 

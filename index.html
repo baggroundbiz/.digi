@@ -2811,6 +2811,9 @@ h3, h4 {
 
 
 <script>
+  
+  let scrollY = 0;
+
   /* =====================
      MOBILE NAV
      ===================== */
@@ -2875,27 +2878,55 @@ h3, h4 {
 
       contentEl.textContent = modalData[key].content;
 
-      overlay.classList.add("active");
-      body.classList.add("lock-scroll");
+      scrollY = window.scrollY;
+
+body.style.position = "fixed";
+body.style.top = `-${scrollY}px`;
+body.style.width = "100%";
+
+overlay.classList.add("active");
+body.classList.add("lock-scroll");
+
     });
   });
 
   closeBtn.addEventListener("click", () => {
     overlay.classList.remove("active");
-    body.classList.remove("lock-scroll");
+body.classList.remove("lock-scroll");
+
+body.style.position = "";
+body.style.top = "";
+body.style.width = "";
+
+window.scrollTo(0, scrollY);
+
   });
 
   overlay.addEventListener("click", e => {
     if (e.target === overlay) {
       overlay.classList.remove("active");
-      body.classList.remove("lock-scroll");
+body.classList.remove("lock-scroll");
+
+body.style.position = "";
+body.style.top = "";
+body.style.width = "";
+
+window.scrollTo(0, scrollY);
+
     }
   });
   
   document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && overlay.classList.contains("active")) {
     overlay.classList.remove("active");
-    body.classList.remove("lock-scroll");
+body.classList.remove("lock-scroll");
+
+body.style.position = "";
+body.style.top = "";
+body.style.width = "";
+
+window.scrollTo(0, scrollY);
+
   }
 });
 

@@ -570,7 +570,7 @@ transform: translateX(100%);
   }
 
   .mobile-brand svg {
-  width: 110px;      /* smaller & premium */
+  width: 140px;      /* smaller & premium */
   margin-bottom: 28px;
 }
   @media (max-width: 764px) {
@@ -1369,10 +1369,12 @@ transform: translateX(100%);
 
   /* Logo */
   .logo-svg {
-  width: 64px;          /* ✅ smaller, controlled */
+  width: 120px;          /* BIGGER + clearer */
   height: auto;
   display: block;
+  image-rendering: auto;
 }
+
   
   @media (max-width: 764px) {
   .brand {
@@ -1382,6 +1384,12 @@ transform: translateX(100%);
   .brand-copy {
     align-items: flex-start;     /* ⬅️ text always left */
     text-align: left;
+  }
+}
+
+@media (max-width: 764px) {
+  .logo-svg {
+    width: 96px;   /* clean & premium on mobile */
   }
 }
 
@@ -2478,9 +2486,18 @@ h3, h4 {
   <div class="container nav">
 
     <div class="brand">
-      <svg class="logo-svg" viewBox="0 0 300 200" preserveAspectRatio="xMinYMid meet">
-        <image href="https://i.ibb.co/Fk6bwy2M/Untitled-design-9-removebg-preview.png" width="500" height="200"/>
-      </svg>
+      <svg
+  class="logo-svg"
+  viewBox="0 0 500 200"
+  preserveAspectRatio="xMinYMid meet"
+>
+  <image
+    href="https://i.ibb.co/Fk6bwy2M/Untitled-design-9-removebg-preview.png"
+    width="500"
+    height="200"
+  />
+</svg>
+
 
       <div class="brand-copy">
         <span class="brand-text">Bagground</span>
@@ -2491,8 +2508,17 @@ h3, h4 {
 
     <nav class="nav-links">
       <div class="mobile-brand">
-        <svg viewBox="140 0 400 200">           <image href="https://i.ibb.co/Fk6bwy2M/Untitled-design-9-removebg-preview.png" width="500" height="200"/>
-        </svg>
+        <svg
+  viewBox="0 0 500 200"
+  preserveAspectRatio="xMidYMid meet"
+>
+  <image
+    href="https://i.ibb.co/Fk6bwy2M/Untitled-design-9-removebg-preview.png"
+    width="500"
+    height="200"
+  />
+</svg>
+
       </div>
 
       <a href="#"><span>Home</span></a>

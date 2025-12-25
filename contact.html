@@ -63,6 +63,38 @@ body {
   gap:10px;
 }
 
+/* Make logo link behave like a normal container */
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Prevent browser link states from affecting SVG or text */
+.brand-link:link,
+.brand-link:visited,
+.brand-link:hover,
+.brand-link:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Prevent filters from affecting logo */
+.brand-link svg,
+.brand-link image {
+  filter: none !important;
+}
+
+/* Keep your existing hover animation */
+@media (hover: hover) {
+  .brand-link:hover .logo-svg {
+    transform: scale(1.05);
+  }
+}
+
+
 .logo-svg {
   width:64px;
 }
@@ -330,15 +362,35 @@ textarea:focus {
 }
 
 .footer-socials a {
-  width:38px;
-  height:38px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:10px;
-  border:1px solid #e5e7eb;
-  text-decoration:none;
-  color:#111;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px; /* smooth edge square */
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  color: #111111;
+  font-size: 18px;
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.footer-socials a:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+}
+
+/* RIGHT: Copyright */
+.footer-copy {
+  white-space: nowrap;
 }
 
 /* =====================
@@ -382,15 +434,21 @@ textarea:focus {
 
 <header class="header">
   <div class="container nav">
-    <div class="brand">
-      <svg class="logo-svg" viewBox="0 0 300 200">
-        <image href="https://i.ibb.co/Fk6bwy2M/Untitled-design-9-removebg-preview.png" width="500" height="200"/>
-      </svg>
-      <div class="brand-copy">
-        <span class="brand-text">Bagground</span>
-        <span class="brand-tagline">Your Full Digital Groundwork Bag</span>
-      </div>
-    </div>
+    <a href="index.html" class="brand brand-link" aria-label="Go to homepage">
+  <svg class="logo-svg" viewBox="0 0 500 200" preserveAspectRatio="xMinYMid meet">
+    <image
+      href="https://i.ibb.co/Fk6bwy2M/Untitled-design-9-removebg-preview.png"
+      width="500"
+      height="200"
+    />
+  </svg>
+
+  <div class="brand-copy">
+    <span class="brand-text">Bagground</span>
+    <span class="brand-tagline">Your Full Digital Groundwork Bag</span>
+  </div>
+</a>
+
   </div>
 </header>
 
